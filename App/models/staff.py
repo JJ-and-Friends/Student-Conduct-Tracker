@@ -1,4 +1,6 @@
 from App.database import db
+from App.models.negative_review import Negative_Review
+from App.models.positive_review import Positive_Review
 from .user import User
 from .student import Student
 from .karma import Karma
@@ -41,10 +43,17 @@ class Staff(User):
 #create a review for a student
 
   def createReview(self, student, isPositive, comment):
-    review = Review(self, student, isPositive, comment)
-    student.reviews.append(review)  #add review to the student
-    db.session.add(review)  #add to db
-    db.session.commit()
+    if isPositive:
+      review = Positive_Review(self, student, comment)
+      student.positive_reviews.append(review)  #add review to the student
+      db.session.add(review)  #add to db
+      db.session.commit()
+    else:
+        review = Negative_Review(self, student, comment)
+        student.negative_reviews.append(review)  #add review to the student
+        db.session.add(review)  #add to db
+        db.session.commit()
+
     return review
 
   def searchStudent(self, searchTerm):
