@@ -22,11 +22,10 @@ class Karma(db.Model):
     badKarma = 0
 
     # Iterate through reviews associated with the student
-    for review in student.reviews:
-      if review.isPositive == True:  #if review is positive then upvotes on the review contributes to good karma
+    for review in student.positive_reviews: #if review is positive then upvotes on the review contributes to good karma
         goodKarma += review.upvotes
         badKarma += review.downvotes
-      else:  #if review is not positive then upvotes on the review contributes to bad karma
+    for review in student.negative_reviews: #if review is not positive then upvotes on the review contributes to bad karma
         badKarma += review.upvotes
         goodKarma += review.downvotes
 

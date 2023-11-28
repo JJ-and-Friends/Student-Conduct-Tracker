@@ -2,6 +2,7 @@ from App.database import db
 from .student import Student
 from datetime import datetime
 from .karma import Karma
+from abc import ABC, abstractmethod
 
 # Define the association table for staff upvotes on reviews
 review_staff_upvoters = db.Table(
@@ -48,127 +49,38 @@ class Review(db.Model):
 
   upvotes = db.Column(db.Integer, nullable=False)
   downvotes = db.Column(db.Integer, nullable=False)
-  isPositive = db.Column(db.Boolean, nullable=False)
   created = db.Column(db.DateTime, default=datetime.utcnow)
   comment = db.Column(db.String(400), nullable=False)
 
-  # initialize the review. when it is created the date is automatically gotten and votes are at 0
-  def __init__(self, reviewer, student, isPositive, comment):
-    self.reviewerID = reviewer.ID
-    self.reviewer = reviewer
-    self.studentID = student.ID
-    self.isPositive = isPositive
-    self.comment = comment
-    self.upvotes = 0
-    self.downvotes = 0
-    self.created = datetime.now()
-
+ 
+  @abstractmethod
+  def __init__(self, reviewer, student, comment):
+    pass
+ 
+  @abstractmethod
   def get_id(self):
-    return self.ID
+    pass
 
 
-#allows the comment and whether the review is positive to be edited if the staff member is the creator of the review, returns none if not
+  @abstractmethod
+  def editReview(self, staff, comment):
+    pass
 
-  def editReview(self, staff, isPositive, comment):
-    if self.reviewer == staff:
-      self.isPositive = isPositive
-      self.comment = comment
-      db.session.add(self)
-      db.session.commit()
-      return True
-    return None
-
-  #deletes the review when called if the staff memeber is the creator of the review, return none if not
-
+ 
+  @abstractmethod
   def deleteReview(self, staff):
-    if self.reviewer == staff:
-      db.session.delete(self)
-      db.session.commit()
-      return True
-    return None
+    pass
 
-  #adds 1 to the upvotes for the review when called
+  
+  @abstractmethod
   def upvoteReview(self, staff): 
-    if staff in self.staffUpvoters:  # If they upvoted the review already, return current votes
-      return self.upvotes
+    pass
 
-    else:
-      if staff not in self.staffUpvoters:  #if staff has not upvoted allow the vote
-        self.upvotes += 1
-        self.staffUpvoters.append(staff)
-
-        if staff in self.staffDownvoters:  #if they had downvoted previously then remove their downvote to account for switching between votes
-          self.downvotes -= 1
-          self.staffDownvoters.remove(staff)
-
-      db.session.add(self)
-      db.session.commit()
-
-      # Retrieve the associated Student object using studentID
-      student = Student.query.get(self.studentID)
-
-      # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
-      if student.karmaID is None:
-        karma = Karma(score=0.0, rank=-99)
-        db.session.add(karma)  # Add the Karma record to the session
-        db.session.flush()  # Ensure the Karma record gets an ID
-        student.karmaID = karma.karmaID  # Set the student's karmaID to the new Karma record's ID
-
-      # Update Karma for the student
-      student_karma = Karma.query.get(student.karmaID)
-      student_karma.calculateScore(student)
-      student_karma.updateRank()
-      db.session.commit()
-
-    return self.upvotes
-
-  #adds 1 to the downvotes for the review when called
-
+    
+  @abstractmethod
   def downvoteReview(self, staff): 
-    if staff in self.staffDownvoters:  # If they downvoted the review already, return current votes
-      return self.downvotes
+    pass
 
-    else:
-      if staff not in self.staffDownvoters:  #if staff has not downvoted allow the vote
-        self.downvotes += 1
-        self.staffDownvoters.append(staff)
-
-        if staff in self.staffUpvoters:  #if they had upvoted previously then remove their upvote to account for switching between votes
-          self.upvotes -= 1
-          self.staffUpvoters.remove(staff)
-
-      db.session.add(self)
-      db.session.commit()
-      # Retrieve the associated Student object using studentID
-      student = Student.query.get(self.studentID)
-
-      # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
-      if student.karmaID is None:
-        karma = Karma(score=0.0, rank=-99)
-        db.session.add(karma)  # Add the Karma record to the session
-        db.session.flush()  # Ensure the Karma record gets an ID
-        db.session.commit()
-        student.karmaID = karma.karmaID  # Set the student's karmaID to the new Karma record's ID
-
-  # Update Karma for the student
-      student_karma = Karma.query.get(student.karmaID)
-      student_karma.calculateScore(student)
-      student_karma.updateRank()
-
-    return self.downvotes
-
-  #return json representation of the review
-
+  @abstractmethod
   def to_json(self):
-    return {
-        "reviewID": self.ID,
-        "reviewer": self.reviewer.firstname + " " + self.reviewer.lastname,
-        "studentID": self.student.ID,
-        "studentName": self.student.firstname + " " + self.student.lastname,
-        "created":
-        self.created.strftime("%d-%m-%Y %H:%M"),  #format the date/time
-        "isPositive": self.isPositive,
-        "upvotes": self.upvotes,
-        "downvotes": self.downvotes,
-        "comment": self.comment
-    }
+    pass
