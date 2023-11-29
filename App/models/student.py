@@ -1,15 +1,14 @@
 from App.database import db
+from .user import User
 
 
-
-class Student():
+class Student(User):
 	__tablename__ = 'student'
 	ID = db.Column(db.String(10), primary_key=True)
 	contact = db.Column(db.String(30), nullable=False)
 	studentType = db.Column(db.String(30))  #full-time, part-time or evening
 	yearOfStudy = db.Column(db.Integer, nullable=False)
-	positive_reviews = db.relationship('Review', backref='student', lazy='joined')
-	negative_reviews = db.relationship('Review', backref='student', lazy='joined')
+	reviews = db.relationship('Review', backref='student', lazy='joined')
 	karmaID = db.Column(db.Integer, db.ForeignKey('karma.karmaID'))
 
   #When student is newly created there would be no reviews or karma yet
