@@ -1,5 +1,6 @@
 from App.database import db
 from .student import Student
+from .KarmaStrategy import KarmaStrategy
 
 
 class Karma(db.Model):
@@ -8,7 +9,8 @@ class Karma(db.Model):
   score = db.Column(db.Float, nullable=False, default=0.0)
   rank = db.Column(db.Integer, nullable=False, default=-99)
 
-  def __init__(self, score=0.0, rank=-99):
+  def __init__(self, strategy: KarmaStrategy, score=0.0, rank=-99):
+    self.strategy = strategy
     self.score = score
     self.rank = rank
 
@@ -16,7 +18,7 @@ class Karma(db.Model):
     return {"karmaID": self.karmaID, "score": self.score, "rank": self.rank}
 
 # Calculate the karma score for the provided student based on reviews
-
+""" 
   def calculateScore(self, student):
     goodKarma = 0
     badKarma = 0
@@ -71,10 +73,10 @@ class Karma(db.Model):
   # Commit the changes to the database
     db.session.commit()
 
-  @classmethod
+ @classmethod
   def getScore(cls, karmaID):
     # Retrieve the karma score by karma id
     karma = cls.query.filter_by(karmaID=karmaID).first()
     if karma:
       return karma.score
-    return None
+    return None """
