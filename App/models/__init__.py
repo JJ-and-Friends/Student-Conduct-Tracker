@@ -5,5 +5,5 @@ from .review import *
 from .staff import *
 from .student import *
 from .KarmaStrategy import *
-from .CalculateScore import *
+from .CalculateScoreStrategy import *
 from .UpdateRankStrategy import *

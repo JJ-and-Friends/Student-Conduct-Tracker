@@ -89,6 +89,9 @@ class Review(db.Model):
 
   #adds 1 to the upvotes for the review when called
   def upvoteReview(self, staff): 
+
+    strategy = CalculateScoreStrategy()  # or UpdateRankStrategy(), depending on your requirements
+
     if staff in self.staffUpvoters:  # If they upvoted the review already, return current votes
       return self.upvotes
 
@@ -109,22 +112,25 @@ class Review(db.Model):
 
       # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
       if student.karmaID is None:
-        karma = Karma(score=0.0, rank=-99)
+        karma = Karma(strategy, score=0.0, rank=-99)
         db.session.add(karma)  # Add the Karma record to the session
         db.session.flush()  # Ensure the Karma record gets an ID
         student.karmaID = karma.karmaID  # Set the student's karmaID to the new Karma record's ID
 
       # Update Karma for the student
       student_karma = Karma.query.get(student.karmaID)
-      student_karma.calculateScore(student)
-      student_karma.updateRank()
+      student_karma.set_strategy(strategy)
+      student_karma.execute_strategy(student)
       db.session.commit()
 
     return self.upvotes
 
   #adds 1 to the downvotes for the review when called
 
-  def downvoteReview(self, staff): 
+  def downvoteReview(self, staff):
+    
+    strategy = CalculateScoreStrategy()  # or UpdateRankStrategy(), depending on your requirements
+ 
     if staff in self.staffDownvoters:  # If they downvoted the review already, return current votes
       return self.downvotes
 
@@ -144,7 +150,7 @@ class Review(db.Model):
 
       # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
       if student.karmaID is None:
-        karma = Karma(score=0.0, rank=-99)
+        karma = Karma(strategy, score=0.0, rank=-99)
         db.session.add(karma)  # Add the Karma record to the session
         db.session.flush()  # Ensure the Karma record gets an ID
         db.session.commit()
@@ -152,8 +158,8 @@ class Review(db.Model):
 
   # Update Karma for the student
       student_karma = Karma.query.get(student.karmaID)
-      student_karma.calculateScore(student)
-      student_karma.updateRank()
+      student_karma.set_strategy(strategy)
+      student_karma.execute_strategy(student)
 
     return self.downvotes
 

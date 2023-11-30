@@ -1,4 +1,4 @@
-from App.models import Review, Karma, Student
+from App.models import Review, Karma, Student, CalculateScoreStrategy
 from App.database import db
 
 def get_reviews(): 
@@ -34,6 +34,9 @@ def delete_review(review, staff):
 
 def downvoteReview(reviewID, staff):
     review = db.session.query(Review).get(reviewID)
+    strategy = CalculateScoreStrategy()  # or UpdateRankStrategy(), depending on your requirements
+
+
     if staff in review.staffDownvoters:  # If they downvoted the review already, return current votes
         return review.downvotes
 
@@ -53,53 +56,53 @@ def downvoteReview(reviewID, staff):
 
         # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
         if student.karmaID is None:
-            karma = Karma(score=0.0, rank=-99)
+            karma = Karma(strategy, score=0.0, rank=-99)
             db.session.add(karma)  # Add the Karma record to the session
             db.session.flush()  # Ensure the Karma record gets an ID
             db.session.commit()
             # Set the student's karmaID to the new Karma record's ID
             student.karmaID = karma.karmaID
 
-      # Update Karma for the student
         student_karma = db.session.query(Karma).get(student.karmaID)
-        student_karma.calculateScore(student)
-        student_karma.updateRank()
+        student_karma.set_strategy(strategy)
+        student_karma.execute_strategy(student)
+
 
     return review.downvotes
 
 
 def upvoteReview(reviewID, staff):
-    review = db.session.query(Review).get(reviewID)
+   review = db.session.query(Review).get(reviewID)
+   strategy = CalculateScoreStrategy() # Define strategy here
 
-    if staff in review.staffUpvoters:  # If they upvoted the review already, return current votes
-        return review.upvotes
+   if staff in review.staffUpvoters: 
+       return review.upvotes
 
-    else:
-        if staff not in review.staffUpvoters:  # if staff has not upvoted allow the vote
-            review.upvotes += 1
-            review.staffUpvoters.append(staff)
+   else:
+       if staff not in review.staffUpvoters: 
+           review.upvotes += 1
+           review.staffUpvoters.append(staff)
 
-            if staff in review.staffDownvoters:  # if they had downvoted previously then remove their downvote to account for switching between votes
-                review.downvotes -= 1
-                review.staffDownvoters.remove(staff)
+           if staff in review.staffDownvoters: 
+               review.downvotes -= 1
+               review.staffDownvoters.remove(staff)
 
-        db.session.add(review)
-        db.session.commit()
-        # Retrieve the associated Student object using studentID
-        student = db.session.query(Student).get(review.studentID)
+       db.session.add(review)
+       db.session.commit()
 
-        # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
-        if student.karmaID is None:
-            karma = Karma(score=0.0, rank=-99)
-            db.session.add(karma)  # Add the Karma record to the session
-            db.session.flush()  # Ensure the Karma record gets an ID
-            db.session.commit()
-            # Set the student's karmaID to the new Karma record's ID
-            student.karmaID = karma.karmaID
+       student = db.session.query(Student).get(review.studentID)
 
-      # Update Karma for the student
-        student_karma = db.session.query(Karma).get(student.karmaID)
-        student_karma.calculateScore(student)
-        student_karma.updateRank()
+       if student.karmaID is None:
+           karma = Karma(strategy=strategy, score=0.0, rank=-99) # Ensure strategy is passed as an argument
+           db.session.add(karma)
+           db.session.flush()
+           db.session.commit()
 
-    return review.upvotes
+           student.karmaID = karma.karmaID
+
+       student_karma = db.session.query(Karma).get(student.karmaID)
+       student_karma.set_strategy(strategy)
+       student_karma.execute_strategy(student)
+
+   return review.upvotes
+
