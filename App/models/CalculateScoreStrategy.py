@@ -4,6 +4,9 @@ from .KarmaStrategy import KarmaStrategy
 
 class CalculateScoreStrategy(KarmaStrategy):
     def execute(self, student):
+        if not student.reviews:
+            return 0
+
         goodKarma = 0
         badKarma = 0
 
@@ -15,4 +18,5 @@ class CalculateScoreStrategy(KarmaStrategy):
             else:
                 badKarma += review.upvotes
                 goodKarma += review.downvotes
+
         return (goodKarma - badKarma) / len(student.reviews)
