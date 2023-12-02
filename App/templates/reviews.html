@@ -1,9 +1,189 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myRating Home</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-{{ super() }}
+    <link rel="stylesheet" href="/App/static/styles.css">
 
-{% block content %}
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+</head>
+<body>
+  
+    <nav>
+        <div class="nav-wrapper">
+          <img id="navLogo" src="/images/student rating logo white.png">
+          <a href="reviews.html" class="hide-on-med-and-down brand-logo">myRating</a>
+          <ul id="nav-mobile" class="right">
+            <li><a class="btn-floating btn-large waves-effect waves-light indigo" href="#"><i class="large material-icons">account_circle</i></a></li>
+          </ul>
+        </div>
+      </nav>
 
-    <h1>Reviews</h1>
+      <div class="row">
+        <div class="col m2 list-container collection">
+            <h3>Search Students</h3>
+            <div class="input-field">
+                <input id="search" type="search" placeholder="Search">
+                <i class="material-icons">close</i>
+            </div>
+            <ul class="collection " id="result">
+                <div class="list-item"> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a>
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a> 
+                    <a href="#" id="student-list" class="collection-item center">x. student</a>
+                </div>
+            </ul>
+        </div>
 
-{% endblock %}
+
+        <div class="right col m2 list-container collection" style="height: 84vh;">
+            <div style="padding: 3vh;"></div>
+            <a class="waves-effect waves-light btn btn-large blue-normal-button right" href="#"><i class="material-icons left">add</i>New Review</a>
+            <div style="padding: 6vh;"></div>
+            <a class="btn waves-effect waves-light btn-large blue-normal-button right" href="#"><i class="material-icons left">collections</i>My Reviews</a>
+            <div style="padding: 6vh;"></div>
+            <form>
+                <div class="white input-field">
+                    <select class="indigo-text">
+                      <option value="" disabled selected>Order</option>
+                      <option value="1">Newest</option>
+                      <option value="2">Oldest</option>
+                      <option value="3">Most Karma</option>
+                      <option value="4">Least Karma</option>
+                    </select>
+                    <label class="white">Order By:</label>
+                  <button class="btn waves-effect waves-light blue-normal-button right" type="submit">Sort</button>
+                </div>
+            </form>
+        </div>
+  
+        
+      <main class="container">
+            <h1>Ratings</h1>
+            
+            <!-- Card 1 -->
+            <div class="col s12 m3 l4" style="min-width: 30vw;">
+                <div class="card">
+                    <div class="card-content" href="#" style="cursor: pointer;">
+                        <p class="green-text truncate center">Good Review</p>
+                        <span class="card-title center indigo-text truncate">Student Name - Karma</span>
+                        <p class="truncate">This is some card content that I made long to show off the truncation feature.</p>
+                    </div>
+                    <div class="center">
+                            <a class="waves-effect waves-light btn-large green vote-button"><i class="material-icons left">thumb_up</i> xxx </a>
+                            <a class="waves-effect waves-light btn-large red vote-button"><i class="material-icons left">thumb_down</i> xxx </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col s12 m3 l4" style="min-width: 30vw;">
+                <div class="card">
+                    <div class="card-content" href="#" style="cursor: pointer;">
+                        <p class="red-text truncate center">Bad Review</p>
+                        <span class="card-title center indigo-text truncate">Student Name - Karma</span>
+                        <p class="truncate">This is some card content. The user upvoted this one.</p>
+                    </div>
+                    <div class="center">
+                            <a class="waves-effect waves-light btn-large green vote-button disabled"><i class="material-icons left">thumb_up</i> xxx </a>
+                            <a class="waves-effect waves-light btn-large red vote-button"><i class="material-icons left">thumb_down</i> xxx </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col s12 m3 l4" style="min-width: 30vw;">
+                <div class="card">
+                    <div class="card-content" href="#" style="cursor: pointer;">
+                        <p class="red-text truncate center">Bad Review</p>
+                        <span class="card-title center indigo-text truncate">Student Name - Karma</span>
+                        <p class="truncate">This is some card content. The user downvoted this</p>
+                    </div>
+                    <div class="center">
+                            <a class="waves-effect waves-light btn-large green vote-button"><i class="material-icons left">thumb_up</i> xxx </a>
+                            <a class="waves-effect waves-light btn-large red vote-button disabled"><i class="material-icons left">thumb_down</i> xxx </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col s12 m3 l4" style="min-width: 30vw;">
+                <div class="card">
+                    <div class="card-content" href="#" style="cursor: pointer;">
+                        <p class="green-text truncate center">Good Review</p>
+                        <span class="card-title center indigo-text truncate">Student Name - Karma</span>
+                        <p class="truncate">This is some card content that I made long to show off the truncation feature.</p>
+                    </div>
+                    <div class="center">
+                            <a class="waves-effect waves-light btn-large green vote-button"><i class="material-icons left">thumb_up</i> xxx </a>
+                            <a class="waves-effect waves-light btn-large red vote-button"><i class="material-icons left">thumb_down</i> xxx </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="col s12 m3 l4" style="min-width: 30vw;">
+                <div class="card">
+                    <div class="card-content" href="#" style="cursor: pointer;">
+                        <p class="green-text truncate center">Good Review</p>
+                        <span class="card-title center indigo-text truncate">Student Name - Karma</span>
+                        <p class="truncate">This is some card content that I made long to show off the truncation feature.</p>
+                    </div>
+                    <div class="center">
+                            <a class="waves-effect waves-light btn-large green vote-button"><i class="material-icons left">thumb_up</i> xxx </a>
+                            <a class="waves-effect waves-light btn-large red vote-button"><i class="material-icons left">thumb_down</i> xxx </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="col s12 m3 l4" style="min-width: 30vw;">
+                <div class="card">
+                    <div class="card-content" href="#" style="cursor: pointer;">
+                        <p class="green-text truncate center">Good Review</p>
+                        <span class="card-title center indigo-text truncate">Student Name - Karma</span>
+                        <p class="truncate">This is some card content that I made long to show off the truncation feature.</p>
+                    </div>
+                    <div class="center">
+                            <a class="waves-effect waves-light btn-large green vote-button"><i class="material-icons left">thumb_up</i> xxx </a>
+                            <a class="waves-effect waves-light btn-large red vote-button"><i class="material-icons left">thumb_down</i> xxx </a>
+                    </div>
+                </div>
+            </div>
+
+
+      </main> 
+
+
+    <script>
+         M.AutoInit();
+    </script>
+    
+</body>
+</html>

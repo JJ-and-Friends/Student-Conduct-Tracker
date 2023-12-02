@@ -138,6 +138,24 @@ h4 {
     color: black;
 }
 
+.blue-normal-button {
+    font-size: 20px;
+    font-family: 'Outfit';
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 50px;
+    color: rgb(255, 255, 255);
+    background:#4659E3;
+    transition: background-color 0.5s ease;
+}
+
+.blue-normal-button:hover {
+    background-color:#122D85;
+    border: 2px solid black;
+    color: white;
+}
+
 .input-field {
     margin-bottom: 80px;
     color: #122D85;
@@ -176,3 +194,33 @@ h4 {
     height: 100vh;
     z-index: -1;
 }
+
+#student-list {
+    color:#233CB4
+}
+
+.vote-button {
+    border-radius: 50px;
+    margin-top: 1vh;
+    margin-bottom: 5vh;
+}
+
+.card-title {
+    font-family: 'Outfit';
+    font-weight: bold;
+}
+
+.list-container {
+    max-height: 84vh;
+    overflow-y: auto;
+}
+
+.card-cont-good {
+    min-width: 30vw;
+    outline: green 50px,;
+}
+
+.card {
+    margin-left: 3vw;
+}
+
