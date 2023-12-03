@@ -13,7 +13,7 @@ index_views = Blueprint('index_views', __name__, template_folder='../templates')
 def index_page():
     return render_template('index.html')
 
-def generate_random_contact_number():
+""" def generate_random_contact_number():
     return f"0000-{random.randint(100, 999)}-{random.randint(1000, 9999)}"
 
 
@@ -47,4 +47,4 @@ def init():
       db.session.add(student)
       db.session.commit()
 
-  return jsonify({'message': 'Database initialized'}),201
+  return jsonify({'message': 'Database initialized'}),201 """

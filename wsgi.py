@@ -1,4 +1,4 @@
-from App.views.index import generate_random_contact_number
+#from App.views.index import generate_random_contact_number
 import click, pytest, sys
 from flask import Flask, jsonify
 from flask.cli import with_appcontext, AppGroup
@@ -7,7 +7,7 @@ import randomname
 from App.database import db, get_migrate
 from App.main import create_app
 from App.controllers import ( create_user, create_staff, create_student, get_all_users_json, get_all_users )
-from App.views import (generate_random_contact_number)
+#from App.views import (generate_random_contact_number)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
