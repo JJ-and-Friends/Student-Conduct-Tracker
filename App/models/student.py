@@ -41,4 +41,7 @@ class Student(User):
 #get karma record from the karma table using the karmaID attached to the student
 	def getKarma(self):
 		from .karma import Karma
-		return Karma.query.get(self.karmaID)
+		if self.karmaID is not None:
+			return Karma.query.get(self.karmaID)
+		else:
+			return None
