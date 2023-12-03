@@ -73,36 +73,32 @@ def downvoteReview(reviewID, staff):
 
 def upvoteReview(reviewID, staff):
    review = db.session.query(Review).get(reviewID)
+   if review is None:
+       raise ValueError("Invalid reviewID")
+
    strategy = CalculateScoreStrategy() # Define strategy here
 
-   if staff in review.staffUpvoters: 
-       return review.upvotes
+   if staff not in review.staffUpvoters: 
+       review.upvotes += 1
+       review.staffUpvoters.append(staff)
 
-   else:
-       if staff not in review.staffUpvoters: 
-           review.upvotes += 1
-           review.staffUpvoters.append(staff)
+       if staff in review.staffDownvoters: 
+           review.downvotes -= 1
+           review.staffDownvoters.remove(staff)
 
-           if staff in review.staffDownvoters: 
-               review.downvotes -= 1
-               review.staffDownvoters.remove(staff)
+   student = db.session.query(Student).get(review.studentID)
 
-       db.session.add(review)
-       db.session.commit()
+   if student.karmaID is None:
+       karma = Karma(strategy=strategy, score=0.0, rank=-99) # Ensure strategy is passed as an argument
+       db.session.add(karma)
+       db.session.flush()
 
-       student = db.session.query(Student).get(review.studentID)
+       student.karmaID = karma.karmaID
 
-       if student.karmaID is None:
-           karma = Karma(strategy=strategy, score=0.0, rank=-99) # Ensure strategy is passed as an argument
-           db.session.add(karma)
-           db.session.flush()
-           db.session.commit()
+   student_karma = db.session.query(Karma).get(student.karmaID)
+   student_karma.set_strategy(strategy)
+   student_karma.execute_strategy(student)
 
-           student.karmaID = karma.karmaID
-
-       student_karma = db.session.query(Karma).get(student.karmaID)
-       student_karma.set_strategy(strategy)
-       student_karma.execute_strategy(student)
+   db.session.commit()
 
    return review.upvotes
-
