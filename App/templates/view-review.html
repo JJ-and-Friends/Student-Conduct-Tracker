@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>myRating view review</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="/App/static/styles.css">
@@ -27,9 +27,24 @@
   </nav>
 
   
-    {% block content %} 
-    {% endblock %}
+  <main class="container">
+    <h1>Review by Staff Name</h1>
 
+    <div class="col l12" style="min-width: 30vw;">
+      <div class="card">
+          <div class="card-content">
+              <p class="green-text center">Good Review</p>
+              <span class="card-title center indigo-text">Student Name - ID - Karma</span>
+              <p style="min-height: 20vh;">This is some card content that I made long to show off the truncation feature.</p>
+          </div>
+          <div class="center">
+                  <a class="waves-effect waves-light btn-large green vote-button"><i class="material-icons left">thumb_up</i> xxx </a>
+                  <a class="waves-effect waves-light btn-large red vote-button"><i class="material-icons left">thumb_down</i> xxx </a>
+          </div>
+      </div>
+  </div>
+
+  </main>
     <script>
          M.AutoInit();
     </script>

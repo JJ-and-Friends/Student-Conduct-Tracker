@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>myRating</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="/App/static/styles.css">
@@ -21,14 +21,39 @@
       <img id="navLogo" src="/images/student rating logo white.png">
       <a href="reviews.html" class="hide-on-med-and-down brand-logo">myRating</a>
       <ul id="nav-mobile" class="right">
-        <li><a class="btn-floating btn-large waves-effect waves-light indigo" href="staff-profile.html"><i class="large material-icons">account_circle</i></a></li>
+        <li><a class="btn btn-large waves-effect waves-light normal-button red" href="#"><i class="large material-icons left">account_circle</i>Logout</a></li>
       </ul>
     </div>
   </nav>
 
   
-    {% block content %} 
-    {% endblock %}
+  <main class="container center">
+    <h1>User Account</h1>
+
+    <table class="highlight">
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <td>staff_name</td>
+        </tr>
+        <tr>
+          <th>ID</th>
+          <td>8010100392</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>mail@mail.com</td>
+        </tr>
+        <tr>
+          <th>Teaching Experience</th>
+          <td>xxx years</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="min-height: 10vh;"></div>
+    <a class="btn waves-effect waves-light btn-large center blue-normal-button" href="user-reviews.html"><i class="material-icons left">collections</i>My Reviews</a>
+  </main>
 
     <script>
          M.AutoInit();
