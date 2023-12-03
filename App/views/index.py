@@ -13,10 +13,10 @@ index_views = Blueprint('index_views', __name__, template_folder='../templates')
 def index_page():
     return render_template('index.html')
 
-""" def generate_random_contact_number():
+def generate_random_contact_number():
     return f"0000-{random.randint(100, 999)}-{random.randint(1000, 9999)}"
 
-
+"""
 @index_views.route('/init', methods=['POST'])
 def init():
   db.drop_all()
