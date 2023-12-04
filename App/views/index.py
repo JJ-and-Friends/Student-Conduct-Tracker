@@ -16,7 +16,7 @@ def index_page():
 def generate_random_contact_number():
     return f"0000-{random.randint(100, 999)}-{random.randint(1000, 9999)}"
 
-
+"""
 @index_views.route('/init', methods=['POST'])
 def init():
   db.drop_all()
@@ -47,4 +47,4 @@ def init():
       db.session.add(student)
       db.session.commit()
 
-  return jsonify({'message': 'Database initialized'}),201
+  return jsonify({'message': 'Database initialized'}),201 """
